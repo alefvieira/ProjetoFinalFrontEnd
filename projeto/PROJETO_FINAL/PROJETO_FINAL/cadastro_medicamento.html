@@ -7,6 +7,7 @@
     <title>CADASTRO DE MEDICAMENTO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link rel="stylesheet" href="/style/style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -102,15 +103,19 @@
                             <span>Precisa Prescrição Médica</span>
                         </label>
                     </div>
+                    <div id="batata" class="pulse">
 
 
 
-                    <div class="input-field col s12">
-                        <button class="btn z-depth-4" v-on:click="salva()">Salvar</button>
-                        <button class="btn orange" v-on:click="cancela()">
-                            Cancelar
-                        </button>
-                        <button class="btn red" v-on:click="exclui()">Excluir</button>
+                        <div class="input-field col s12">
+                            <button class="btn z-depth-1 blue darken-4" v-on:click="salva()">Salvar</button>
+                            <button class="btn  z-depth-1 orange darken-4" v-on:click="cancela()">
+                                Cancelar
+                            </button>
+                            <button class="btn z-depth-1  red darken-4" v-on:click="exclui()">Excluir</button>
+                            
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -128,7 +133,7 @@
                             <td>{{t.nome}}</td>
                             <td>{{t.lote}}</td>
                             <td>{{t.prescricao_medica}}</td>
-                            
+
                         </tr>
                     </tbody>
                 </table>
