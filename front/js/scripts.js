@@ -46,3 +46,14 @@ function loader(){
     </div>
     `);
 } 
+
+// VERIFICAÇÃO DA DATA VÁLIDA
+// FUNções de data da compra
+const dataAtual = () =>{
+    var data = new Date();
+    var dia = String(data.getDate()).padStart(2, '0');
+    var mes = String(data.getMonth() + 1).padStart(2, '0');
+    var ano = data.getFullYear();
+    return `${ano}-${mes}-${dia}`;
+    
+}

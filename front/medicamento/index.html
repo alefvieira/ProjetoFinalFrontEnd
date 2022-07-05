@@ -19,77 +19,84 @@
     <div id="app">
         <div class="container row">
             <h1>Cadastro de Medicamento</h1>
+
+            <div class="error">
+                <ul>
+                    <li v-for="er in erros">{{er}}</li>
+                </ul>
+            </div>
+
             <div class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
                         <input placeholder="Digite aqui" id="nome" type="text" class="validate"
-                            v-model="medicamento.nome">
-                        <label for="nome">Nome do Medicamento</label>
+                            v-model.trim="medicamento.nome">
+                        <label for="nome">Nome do Medicamento <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="codigo_barras" type="text" maxlength="12" class="validate"
-                            v-model="medicamento.codigo_barras">
+                            v-model.trim="medicamento.codigo_barras">
                         <label for="codigo_barras">Código de Barras</label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="data_validade" type="date" class="validate"
                             v-model="medicamento.data_validade">
-                        <label for="data_validade">Data de Validade</label>
+                        <label for="data_validade">Data de Validade <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="dosagem" type="text" class="validate"
-                            v-model="medicamento.dosagem">
+                            v-model.trim="medicamento.dosagem">
                         <label for="dosagem">Dosagem</label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="descricao" type="text" class="validate"
-                            v-model="medicamento.descricao">
+                            v-model.trim="medicamento.descricao">
                         <label for="descricao">Descrição</label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="categoria" type="text" class="validate"
-                            v-model="medicamento.categoria">
-                        <label for="categoria">Categoria</label>
+                            v-model.trim="medicamento.categoria">
+                        <label for="categoria">Categoria <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="tipo_medicamento" type="text" class="validate"
-                            v-model="medicamento.tipo_medicamento">
-                        <label for="tipo_medicamento">Tipo Medicamento</label>
+                            v-model.trim="medicamento.tipo_medicamento">
+                        <label for="tipo_medicamento">Tipo Medicamento <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="fabricante" type="text" class="validate"
-                            v-model="medicamento.fabricante">
+                            v-model.trim="medicamento.fabricante">
                         <label for="fabricante">Fabricante</label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="cidade_origem" type="text" class="validate"
-                            v-model="medicamento.cidade_origem">
+                            v-model.trim="medicamento.cidade_origem">
                         <label for="cidade_origem">Cidade de Origem </label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="lote" maxlength="12" type="text" class="validate"
-                            v-model="medicamento.lote">
+                            v-model.trim="medicamento.lote">
                         <label for="lote">Lote </label>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Digite aqui" id="instrucao_uso" type="text" class="validate"
-                            v-model="medicamento.instrucao_uso">
+                            v-model.trim="medicamento.instrucao_uso">
                         <label for="instrucao_uso">Instrução de Uso </label>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Digite aqui" id="composicao" type="text" class="validate"
-                            v-model="medicamento.composicao">
+                            v-model.trim="medicamento.composicao">
                         <label for="composicao">Composição </label>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Digite aqui" id="componentes_quimicos" type="text" class="validate"
-                            v-model="medicamento.componentes_quimicos">
+                            v-model.trim="medicamento.componentes_quimicos">
                         <label for="componentes_quimicos">Componentes Químicos </label>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Digite aqui" id="contra_indicacao" type="text" class="validate"
-                            v-model="medicamento.contra_indicacao">
-                        <label for="contra_indicacao">Contra Indicacao </label>
+                            v-model.trim="medicamento.contra_indicacao">
+                        <label for="contra_indicacao">Contra Indicacao <span style="color:red">*</span></label>
                     </div>
                     <div>
                         <!-- private boolean ativo; // ATIVADO OU DESATIVADO NO PEDIDO -->
@@ -145,9 +152,6 @@
             </div>
             
         </div>
-        
-        
-
     </div>
 
 
@@ -160,7 +164,8 @@
                 return {
                     medicamento: {},
                     medicamentos: [],
-                    loader: loader()
+                    erros: [],
+                    loader: loader(),
                 };
             },
             mounted() {
@@ -169,6 +174,25 @@
                 this.getMedicamentos();
             },
             methods: {
+                validarForm(){
+                    let _this = this;
+
+                    (_this.medicamento.nome == null || _this.medicamento.nome == "")? _this.erros.push("É necessário preencher o Nome"): ""; 
+                    (_this.medicamento.categoria == null || _this.medicamento.categoria == "" )? _this.erros.push("Informe a categoria") : ""; 
+                    (_this.medicamento.contra_indicacao == null || _this.medicamento.contra_indicacao == "" )? _this.erros.push("Informe a contra indicação") : ""; 
+                    (_this.medicamento.tipo_medicamento == null || _this.medicamento.tipo_medicamento == "" )? _this.erros.push("Informe o tipo de medicamento") : ""; 
+                    ( !_this.dataDeValidade() )? _this.erros.push("Informe uma data válida") : ""; 
+
+                
+                },
+
+                dataDeValidade(){
+                    let _this = this;                    
+                    if((_this.medicamento.data_validade > dataAtual() && (_this.medicamento.data_validade != ""  || _this.medicamento.data_validade != undefined))){
+                        return true;
+                    }
+                    return false;
+                },
                 getMedicamentos() {
                     let _this = this;
                     //requisição do tipo GET para recuprar as entidades
@@ -196,34 +220,41 @@
                 },
                 cancela() {
                     //limpa a seleção
+                    this.erros = [];
                     this.medicamento = {
                         descricao: null,
                     };
                 },
                 salva() {
                     let _this = this;
-                    //requisição do tipo POST para inserir ou atualizar uma entidade
-                    //se houver id então atualiza -> isso é verificado no backend
-                    //envia token no header para autenticação
-                    $.ajax({
-                        url: "http://localhost:8080/medicamento",
-                        method: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify(_this.medicamento),
-                        beforeSend(xhr) {
-                            xhr.setRequestHeader(
-                                "Authorization",
-                                "Bearer " + sessionStorage.getItem("token")
-                            );
-                        },
-                        success(r) {
-                            _this.getMedicamentos();
-                            _this.cancela();
-                        },
-                        error(x) {
-                            console.log(`Erro: ${x}`);
-                        },
-                    });
+
+                    _this.erros = [];
+                    _this.validarForm();
+                    console.log(_this.medicamento)
+                    if(_this.erros.length < 1){
+                        //requisição do tipo POST para inserir ou atualizar uma entidade
+                        //se houver id então atualiza -> isso é verificado no backend
+                        //envia token no header para autenticação
+                        $.ajax({
+                            url: "http://localhost:8080/medicamento",
+                            method: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(_this.medicamento),
+                            beforeSend(xhr) {
+                                xhr.setRequestHeader(
+                                    "Authorization",
+                                    "Bearer " + sessionStorage.getItem("token")
+                                );
+                            },
+                            success(r) {
+                                _this.getMedicamentos();
+                                _this.cancela();
+                            },
+                            error(x) {
+                                console.log(`Erro: ${x}`);
+                            },
+                        });
+                    }
                 },
                 exclui() {
                     let _this = this;

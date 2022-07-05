@@ -19,43 +19,47 @@
     <div id="app">
         <div class="container row">
             <h1>Cadastro de Paciente</h1>
+            
+            <div class="error">
+                <ul>
+                    <li v-for="er in erros">{{er}}</li>
+                </ul>
+            </div>
+
             <div class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input placeholder="Digite aqui" id="nome" type="text" class="validate" v-model="paciente.nome">
-                        <label for="nome">Nome</label>
+                        <input placeholder="Digite aqui" id="nome" type="text" class="validate" v-model.trim="paciente.nome">
+                        <label for="nome">Nome <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Digite aqui" id="data_nascimento" type="date" class="validate"
                             v-model="paciente.data_nascimento">
-                        <label for="data_nascimento">Data da Nascimento</label>
+                        <label for="data_nascimento">Data da Nascimento <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Digite aqui" id="cpf" type="text" maxlength="11" class="validate"
-                            v-model="paciente.cpf">
+                            v-model.trim="paciente.cpf">
                         <label for=" cpf">CPF</label>
                     </div>
                     <div class="input-field col s12">
                         <input text-area placeholder="Digite aqui" id="alergia" type="text" line class="validate"
-                            v-model="paciente.alergia">
-                        <!-- v-model="paciente.data_nascimento" /> -->
+                            v-model.trim="paciente.alergia">
                         <label for="alergia">Alergia</label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="altura" type="number" line class="validate"
-                            v-model="paciente.altura">
-                        <!-- v-model="paciente.data_nascimento" /> -->
+                            v-model.trim="paciente.altura">
                         <label for="altura">Altura</label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="peso" type="text" maxlength="3" class="validate"
-                            v-model="paciente.peso">
-                        <!-- v-model="paciente.data_nascimento" /> -->
+                            v-model.trim="paciente.peso">
                         <label for="peso">Peso</label>
                     </div>
                     <div class="col s4">
                         <label> Tipo Sanguíneo </label>
-                        <select class="browser-default" v-model="paciente.tipo_sanguineo">
+                        <select class="browser-default" v-model.trim="paciente.tipo_sanguineo">
                             <option value="" disabled selected>Escolha o tipo</option>
                             <option value="A+"> A+ </option>
                             <option value="A-">A-</option>
@@ -70,8 +74,7 @@
 
                     <div class="input-field col s12">
                         <input placeholder="Digite aqui" id="doenca" type="text" class="validate"
-                            v-model="paciente.doenca_cronica">
-                        <!-- v-model="paciente.data_nascimento" /> -->
+                            v-model.trim="paciente.doenca_cronica">
                         <label for="doenca">Doença Crônica</label>
                     </div>
 
@@ -119,6 +122,7 @@
                 return {
                     paciente: {},
                     pacientes: [],
+                    erros: [],
                     loader: loader(),
                 };
             },
@@ -128,6 +132,20 @@
                 this.getPacientes();
             },
             methods: {
+                validarForm(){
+                    let _this = this;
+
+                    // (_this.paciente.alergia == null || _this.paciente.alergia == "" )? _this.paciente.alergia : ""; 
+                    // (_this.paciente.altura == null || _this.paciente.altura == "" )? _this.paciente.altura : ""; 
+                    // (_this.paciente.cpf == null || _this.paciente.cpf == "" )? _this.paciente.cpf : ""; 
+                    ( !_this.validaData() )? _this.erros.push("Informe uma data válida") : ""; 
+                    // (_this.paciente.descricao == null || _this.paciente.descricao == "" )? _this.paciente.descricao : ""; 
+                    // (_this.paciente.doenca_cronica == null || _this.paciente.doenca_cronica == "" )? _this.paciente.doenca_cronica : ""; 
+                    (_this.paciente.nome == null || _this.paciente.nome == "")? _this.erros.push("É necessário preencher o Nome"): ""; 
+                    // (_this.paciente.peso == null || _this.paciente.peso == "" )? _this.paciente.peso : ""; 
+                    // (_this.paciente.tipo_sanguineo == null || _this.paciente.tipo_sanguineo == "" )? _this.paciente.tipo_sanguineo : ""; 
+                
+                },
                 pegarIdade(e) {
                     if((e != null )){
                         var d = e.split("-")
@@ -137,6 +155,13 @@
                     }
                     return "--"
                     
+                },
+                validaData(){
+                    let _this = this;                    
+                    if((_this.paciente.data_nascimento <= dataAtual() && (_this.paciente.data_nascimento != ""  || _this.paciente.data_nascimento != undefined))){
+                        return true;
+                    }
+                    return false;
                 },
                 getPacientes() {
                     let _this = this;
@@ -165,36 +190,40 @@
                 },
                 cancela() {
                     //limpa a seleção
+                    this.erros = [];
                     this.paciente = {
                         descricao: null,
                     };
                 },
                 salva() {
                     let _this = this;
-                    console.log(_this.paciente)
+                    _this.erros = [];
+                    _this.validarForm();
+                    
                     //requisição do tipo POST para inserir ou atualizar uma entidade
                     //se houver id então atualiza -> isso é verificado no backend
                     //envia token no header para autenticação
-                    $.ajax({
-                        url: "http://localhost:8080/paciente",
-                        method: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify(_this.paciente),
-                        beforeSend(xhr) {
-                            xhr.setRequestHeader(
-                                "Authorization",
-                                "Bearer " + sessionStorage.getItem("token")
-                            );
-                        },
-                        success(r) {
-                            _this.getPacientes();
-                            console.log('passei aqui')
-                            _this.cancela();
-                        },
-                        error(x) {
-                            console.log(`Erro: ${x}`);
-                        },
-                    });
+                    if(_this.erros.length < 1){
+                        $.ajax({
+                            url: "http://localhost:8080/paciente",
+                            method: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(_this.paciente),
+                            beforeSend(xhr) {
+                                xhr.setRequestHeader(
+                                    "Authorization",
+                                    "Bearer " + sessionStorage.getItem("token")
+                                );
+                            },
+                            success(r) {
+                                _this.getPacientes();
+                                _this.cancela();
+                            },
+                            error(x) {
+                                console.log(`Erro: ${x}`);
+                            },
+                        });
+                    }
                 },
                 exclui() {
                     let _this = this;
