@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>CADASTRO DE PACIENTE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>home page</h1>
+    </div>
+    <script>
+        var vapp = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    paciente: {
+
+                    },
+                    pacientes: [],
+                };
+            },
+            mounted() {
+                //efetua o login no momento em que carrega a app
+                this.efetuaLogin();
+            },
+            methods: {
+                efetuaLogin() {
+                    let _this = this;
+                    //se houver token executa a consulta diretamente
+                    if (sessionStorage.getItem("token") == null) {
+                        //envia uma consulta usando POST com usuário e senha para login
+                        $.ajax({
+                            url: "http://localhost:8080/login",
+                            method: "POST",
+                            data: { usuario: "usuario", senha: 1234 },
+                        }).done((r) => {
+                            //salva o token na storage
+                            sessionStorage.setItem("token", r);
+                            _this.getPacientes();
+                        });
+                    } else {
+                        _this.getPacientes();
+                    }
+                },
+                getPacientes() {
+                    let _this = this;
+                    //requisição do tipo GET para recuprar as entidades
+                    //envia token no header para autenticação
+                    $.ajax({
+                        url: "http://localhost:8080/paciente/",
+                        method: "GET",
+                        beforeSend(xhr) {
+                            xhr.setRequestHeader(
+                                "Authorization",
+                                "Bearer " + sessionStorage.getItem("token")
+                            );
+                        },
+                        success(r) {
+                            _this.pacientes = r;
+                        },
+                        error(x) {
+                            console.log(`Erro: ${x}`);
+                        },
+                    });
+                },
+                selecionaPaciente(t) {
+                    //seleciona a tarefa ao clicar na tabela
+                    this.paciente = t;
+                },
+                cancela() {
+                    //limpa a seleção
+                    this.paciente = {
+                        descricao: null,
+                    };
+                },
+                salva() {
+                    let _this = this;
+                    console.log(_this.paciente)
+                    //requisição do tipo POST para inserir ou atualizar uma entidade
+                    //se houver id então atualiza -> isso é verificado no backend
+                    //envia token no header para autenticação
+                    $.ajax({
+                        url: "http://localhost:8080/paciente/",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(_this.paciente),
+                        beforeSend(xhr) {
+                            xhr.setRequestHeader(
+                                "Authorization",
+                                "Bearer " + sessionStorage.getItem("token")
+                            );
+                        },
+                        success(r) {
+                            _this.getPacientes();
+                            console.log('passei aqui')
+                            _this.cancela();
+                        },
+                        error(x) {
+                            console.log(`Erro: ${x}`);
+                        },
+                    });
+                },
+                exclui() {
+                    let _this = this;
+                    if (_this.paciente.id) {
+                        //requisição do tipo DELETE para excluir uma entidade
+                        //envia token no header para autenticação
+                        $.ajax({
+                            url: "http://localhost:8080/paciente/" + _this.paciente.id,
+                            method: "DELETE",
+                            beforeSend(xhr) {
+                                xhr.setRequestHeader(
+                                    "Authorization",
+                                    "Bearer " + sessionStorage.getItem("token")
+                                );
+                            },
+                            success(r) {
+                                _this.getPacientes();
+                                _this.cancela();
+                            },
+                            error(x) {
+                                console.log(`Erro: ${x}`);
+                            },
+                        });
+                    }
+                },
+
+            }
+        });
+    </script>
+
+</body>
+
+</html>
+
