@@ -19,39 +19,43 @@
     <div id="app">
         <div class="container row">
             <h1>Cadastro de Médico</h1>
+            
+            <div class="error">
+                <ul>
+                    <li v-for="er in erros">{{er}}</li>
+                </ul>
+            </div>
+
             <div class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input placeholder="Digite aqui" id="nome" type="text" class="validate" v-model="medico.nome">
-                        <label for="nome">Nome</label>
+                        <input placeholder="Digite aqui" id="nome" type="text" class="validate" v-model.trim="medico.nome">
+                        <label for="nome">Nome <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Digite aqui" id="data_nascimento" type="date" class="validate"
                             v-model="medico.data_nascimento">
-                        <label for="data_nascimento">Data</label>
+                        <label for="data_nascimento">Data de Nascimento <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Digite aqui" id="cpf" type="text" maxlength="11" class="validate"
-                            v-model="medico.cpf">
-                        <label for=" cpf">CPF</label>
+                            v-model.trim="medico.cpf">
+                        <label for=" cpf">CPF <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s4">
                         <input text-area placeholder="Digite aqui" id="registro_crm" type="text" line class="validate"
-                            v-model="medico.registro_crm">
-                        <!-- v-model="medico.data_nascimento" /> -->
-                        <label for="registro_crm">CRM</label>
+                            v-model.trim="medico.registro_crm">
+                        <label for="registro_crm">CRM <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="especializacao" type="text" line class="validate"
-                            v-model="medico.especializacao">
-                        <!-- v-model="medico.data_nascimento" /> -->
-                        <label for="especializacao"> especializacao </label>
+                            v-model.trim="medico.especializacao">
+                        <label for="especializacao"> especializacao <span style="color:red">*</span> </label>
                     </div>
                     <div class="input-field col s4">
                         <input placeholder="Digite aqui" id="unidade_trabalho" type="text" class="validate"
-                            v-model="medico.unidade_trabalho">
-                        <!-- v-model="medico.data_nascimento" /> -->
-                        <label for="unidade_trabalho">Unidade Trabalho</label>
+                            v-model.trim="medico.unidade_trabalho">
+                        <label for="unidade_trabalho">Unidade Trabalho <span style="color:red">*</span></label>
                     </div>
 
 
@@ -76,7 +80,7 @@
                     </thead>
                     <tbody>
 
-                        <tr v-for="(t, index) in medicos" v-on:click="selecionaPaciente(t)" style="cursor: pointer">
+                        <tr v-for="(t, index) in medicos" v-on:click="selecionaMedico(t)" style="cursor: pointer">
                             <td style="width:30%">{{t.nome}}</td>
                             <td style="width:23%">{{pegarIdade(t.data_nascimento)}}</td>
                             <td style="width:23%">{{t.registro_crm}}</td>
@@ -96,9 +100,8 @@
             el: "#app",
             data() {
                 return {
-                    medico: {
-
-                    },
+                    medico: {},
+                    erros: [],
                     medicos: [],
                     loader: loader(),
                 };
@@ -108,6 +111,24 @@
                 this.getMedicos();
             },
             methods: {
+                validarForm(){
+                    let _this = this;
+                    _this.erros = [];
+
+                    (_this.medico.registro_crm == null || _this.medico.registro_crm == "" )?  _this.erros.push("Informe registro CRM") : ""; 
+                    (_this.medico.unidade_trabalho == null || _this.medico.unidade_trabalho == "" )? _this.erros.push("Informe a unidade de trabalho") : ""; 
+                    (_this.medico.especializacao == null || _this.medico.especializacao == "" )? _this.erros.push("Informe a especialização") : "";  
+                    (_this.medico.cpf == null || _this.medico.cpf == "" )?  _this.erros.push("Informe O CPF") : ""; 
+                    ( !_this.validaData())? _this.erros.push("Informe uma data válida") : ""; 
+                    (_this.medico.nome == null || _this.medico.nome == "")? _this.erros.push("Informe o Nome"): "";                 
+                },
+                validaData(){
+                    let _this = this;                    
+                    if((_this.medico.data_nascimento <= dataAtual() && (_this.medico.data_nascimento != ""  || _this.medico.data_nascimento != undefined))){
+                        return true;
+                    }
+                    return false;
+                },
                 pegarIdade(e) {
                     if((e != null )){
                         var d = e.split("-")
@@ -138,42 +159,49 @@
                         },
                     });
                 },
-                selecionaPaciente(t) {
+                selecionaMedico(t) {
                     //seleciona a tarefa ao clicar na tabela
                     this.medico = t;
                 },
                 cancela() {
                     //limpa a seleção
+                    this.erros = [];
                     this.medico = {
                         descricao: null,
                     };
                 },
                 salva() {
                     let _this = this;
+                    _this.erros = [];
+                    _this.validarForm();
+
                     console.log(_this.medico)
-                    //requisição do tipo POST para inserir ou atualizar uma entidade
-                    //se houver id então atualiza -> isso é verificado no backend
-                    //envia token no header para autenticação
-                    $.ajax({
-                        url: "http://localhost:8080/medico",
-                        method: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify(_this.medico),
-                        beforeSend(xhr) {
-                            xhr.setRequestHeader(
-                                "Authorization",
-                                "Bearer " + sessionStorage.getItem("token")
-                            );
-                        },
-                        success(r) {
-                            _this.getMedicos();
-                            console.log('passei aqui')
-                            _this.cancela();
-                        },
-                        error(x) {
-                            console.log(`Erro: ${x}`);
-                        },
-                    });
+
+                    if(this.erros.length < 1){
+                        //requisição do tipo POST para inserir ou atualizar uma entidade
+                        //se houver id então atualiza -> isso é verificado no backend
+                        //envia token no header para autenticação
+                        $.ajax({
+                            url: "http://localhost:8080/medico",
+                            method: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(_this.medico),
+                            beforeSend(xhr) {
+                                xhr.setRequestHeader(
+                                    "Authorization",
+                                    "Bearer " + sessionStorage.getItem("token")
+                                );
+                            },
+                            success(r) {
+                                _this.getMedicos();
+                                _this.cancela();
+                            },
+                            error(x) {
+                                console.log(`Erro: ${x}`);
+                            },
+                        });
+                    }
+                    
                 },
                 exclui() {
                     let _this = this;
