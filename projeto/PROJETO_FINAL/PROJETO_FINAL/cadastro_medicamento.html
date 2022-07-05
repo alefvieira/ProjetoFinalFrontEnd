@@ -7,9 +7,11 @@
     <title>CADASTRO DE MEDICAMENTO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts.js"></script>
 </head>
 
 <body>
@@ -135,6 +137,7 @@
             </div>
         </div>
     </div>
+
     <script>
         var vapp = new Vue({
             el: "#app",
@@ -148,27 +151,9 @@
             },
             mounted() {
                 //efetua o login no momento em que carrega a app
-                this.efetuaLogin();
+                verificaAutenticacao()
             },
             methods: {
-                efetuaLogin() {
-                    let _this = this;
-                    //se houver token executa a consulta diretamente
-                    if (sessionStorage.getItem("token") == null) {
-                        //envia uma consulta usando POST com usuário e senha para login
-                        $.ajax({
-                            url: "http://localhost:8080/login",
-                            method: "POST",
-                            data: { usuario: "usuario", senha: 1234 },
-                        }).done((r) => {
-                            //salva o token na storage
-                            sessionStorage.setItem("token", r);
-                            _this.getPacientes();
-                        });
-                    } else {
-                        _this.getPacientes();
-                    }
-                },
                 getPacientes() {
                     let _this = this;
                     //requisição do tipo GET para recuprar as entidades

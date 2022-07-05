@@ -15,17 +15,37 @@ href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.m
 </head>
 <body>
 <div id="app">
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Alergia</th>
+                    <th>Tipo Sanguíneo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="p in pacientes">
+                    <td>{{p.nome}}</td>
+                    <td>{{pegarIdade(p.data_nascimento)}}</td>
+                    <td>{{p.alergia}}</td>
+                    <td>{{p.tipo_sanguineo}}</td>
 
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script>
 var vapp = new Vue({
     el: "#app",
     data() {
         return {
-            tarefa: {
+            paciente: {
                 descricao: null,
             },
-            tarefas: [],
+            pacientes: [],
         };
     },
     mounted() {
@@ -48,13 +68,19 @@ var vapp = new Vue({
             );
             },
             success(r) {
-            _this.tarefas = r;
+            _this.pacientes = r;
             console.log(_this.tarefas)
             },
             error(x) {
             console.log(`Erro: ${x}`);
             },
             });
+        },
+        pegarIdade(e){
+            var d = e.split("-")
+            const dataAtual = new Date();
+            const anoAtual = dataAtual. getFullYear();
+            return anoAtual - d[0]
         },
         efetuaLogin() {
             let _this = this;
