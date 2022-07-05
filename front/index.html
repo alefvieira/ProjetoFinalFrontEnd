@@ -14,7 +14,82 @@
 
 <body>
     <div id="app">
-        <h1>home page</h1>
+
+        <!-- CABEÇALHO -->
+        <header>
+            <nav>
+                <div class="nav-wrapper deep-orange lighten-1">
+                    <div class="container">
+                        <ul class="center hide-on-med-and-down">
+                            <li><a href="/front/">Pagina Inicial</a></li>
+                            <li><a href="/front/medicamento/">Medicamento</a></li>
+                            <li><a href="/front/medico/">Medico</a></li>
+                            <li><a href="/front/paciente/">Paciente</a></li>
+                        </ul>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="/front/signin/" class="waves-effect waves-light ">Entrar</a></li>
+                            <li v-on:click="deslogar()"><a class="waves-effect waves-light orange">Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div style="padding:100px 0px 291px 0px">
+                <div>
+                    <div class="container">
+                        <ul class="collection with-header collection-item deep-orange lighten-3">
+                            <li class="collection-header deep-orange lighten-1">
+                                <h4>REALIZAR CADASTRO</h4>
+                            </li>
+                            <li class="collection-item">
+                                <div>Medicamento<a href="/front/medicamento/" class="secondary-content"><i
+                                            class="material-icons">Cadastrar</i></a></div>
+                            </li>
+                            <li class="collection-item deep-orange lighten-1">
+                                <div>Medico<a href="/front/medico/" class="secondary-content"><i
+                                            class="material-icons">Cadastrar</i></a></div>
+                            </li>
+                            <li class="collection-item">
+                                <div>Paciente<a href="/front/paciente/" class="secondary-content"><i
+                                            class="material-icons">Cadastrar</i></a></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer>
+            <!-- RODAPÉ -->
+            <footer class="page-footer deep-orange lighten-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col l6 s12">
+                            <h5 class="white-text"> About :3</h5>
+                            <p class="grey-text text-lighten-4"> Terms of Use - Privacy Policy</p>
+                        </div>
+                        <div class="col l4 offset-l2 s12">
+                            <h5 class="white-text">GITHUB</h5>
+                            <ul>
+                                <li><a class="grey-text text-lighten-3" href="https://github.com/ericdourado"
+                                        target="_blank">Eric Dourado</a></li>
+                                <li><a class="grey-text text-lighten-3" href="https://github.com/alefvieira"
+                                        target="_blank">Alef Vieira</a></li>
+                                <li><a class="grey-text text-lighten-3" href="https://github.com/lobistico"
+                                        target="_blank">Eduardo Rodrigues</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-copyright">
+                    <div class="container">
+                        © 2022 Copyright Eric, Eduardo, Alef, Luiz, Renato, Paulo
+                    </div>
+                </div>
+            </footer>
+        </footer>
     </div>
     <script>
         var vapp = new Vue({
@@ -28,27 +103,11 @@
                 };
             },
             mounted() {
-                //efetua o login no momento em que carrega a app
-                this.efetuaLogin();
+
             },
             methods: {
-                efetuaLogin() {
-                    let _this = this;
-                    //se houver token executa a consulta diretamente
-                    if (sessionStorage.getItem("token") == null) {
-                        //envia uma consulta usando POST com usuário e senha para login
-                        $.ajax({
-                            url: "http://localhost:8080/login",
-                            method: "POST",
-                            data: { usuario: "usuario", senha: 1234 },
-                        }).done((r) => {
-                            //salva o token na storage
-                            sessionStorage.setItem("token", r);
-                            _this.getPacientes();
-                        });
-                    } else {
-                        _this.getPacientes();
-                    }
+                deslogar() {
+                    sessionStorage.removeItem("token");
                 },
                 getPacientes() {
                     let _this = this;
@@ -140,4 +199,3 @@
 </body>
 
 </html>
-

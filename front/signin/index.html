@@ -34,7 +34,7 @@
                 </div>
                 <div class="input-field col s12">
                     <button class="btn" v-on:click="autenticar()">Acessar</button>
-                    <button class="btn orange" v-on:click="deslogar()">Sair</button>
+                    
                 </div>
             </div>    
         </div>
@@ -73,6 +73,7 @@
                         }).done((r) => {
                             //salva o token na storage
                             sessionStorage.setItem("token", r);
+                            window.href = "/front/"
                         }).fail((erro)=>{
     
                             if(erro.status >= 400) {
@@ -81,6 +82,7 @@
                         });
                     } else {
                         console.log("você já está logado")
+                        window.location.href = "/front/"
                     }
                 },
                 deslogar(){
