@@ -104,15 +104,19 @@
                             <span>Precisa Prescrição Médica</span>
                         </label>
                     </div>
+                    <div id="batata" class="pulse">
 
 
 
-                    <div class="input-field col s12">
-                        <button class="btn z-depth-4" v-on:click="salva()">Salvar</button>
-                        <button class="btn orange" v-on:click="cancela()">
-                            Cancelar
-                        </button>
-                        <button class="btn red" v-on:click="exclui()">Excluir</button>
+                        <div class="input-field col s12">
+                            <button class="btn z-depth-1 blue darken-4" v-on:click="salva()">Salvar</button>
+                            <button class="btn  z-depth-1 orange darken-4" v-on:click="cancela()">
+                                Cancelar
+                            </button>
+                            <button class="btn z-depth-1  red darken-4" v-on:click="exclui()">Excluir</button>
+                            
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -130,7 +134,7 @@
                             <td>{{t.nome}}</td>
                             <td>{{t.lote}}</td>
                             <td>{{t.prescricao_medica}}</td>
-                            
+
                         </tr>
                     </tbody>
                 </table>
