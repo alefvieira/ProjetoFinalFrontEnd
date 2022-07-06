@@ -1,7 +1,7 @@
 
 function verificaAutenticacao(){
     if(sessionStorage.getItem("token") == null){
-        window.location.href = "/signin/";
+        window.location.href = "/front/signin/";
     }
 }
 
