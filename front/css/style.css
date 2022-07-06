@@ -37,7 +37,20 @@ h1{
     background-color:  whitesmoke;
 }
 
-
+main{
+  min-height: calc( 100vh - 10vh);
+  height: auto;
+  position: relative;
+}
+footer{
+  width: 100%;
+  min-height: 10vh;
+  position: absolute;
+  margin-top: 150px;
+  }
+.form-login{
+  padding: 20px 10px 10px 10px;
+}
 
 /* loader */
 .loader{

@@ -1,201 +1,278 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>CADASTRO DE PACIENTE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    
+    <link rel="stylesheet" href="/front/css/style.css" />
+    <script src="/front/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
-<body>
+  </head>
+
+  <body>
     <div id="app">
+      <!-- CABEÇALHO -->
+      <header>
+        <nav class="nav-extended grey darken-4">
+          <div class="nav-wrapper">
+            <a href="#" class="center brand-logo"
+              ><i class="material-icons">add_to_queue</i>ES DEV</a
+            >
+            <ul id="nav-mobile" class=" hide-on-med-and-down">
+              <div class="left">
+                <li><a href="/front/">Pagina Inicial</a></li>
+                <li><a href="/front/medicamento/">Medicamento</a></li>
+                <li><a href="/front/medico/">Medico</a></li>
+                <li><a href="/front/paciente/">Paciente</a></li>
+              </div>
+              </ul>
+              <ul id="nav-mobile" class=" hide-on-small-only">
+              <div class="right">
+                <li>
+                  <a
+                    href="/front/signin/"
+                    class="waves-effect waves-light btn green"
+                    ><i class="material-icons left">check</i>Entrar</a
+                  >
+                </li>
+                <li v-on:click="deslogar()">
+                  <a class="waves-effect waves-light btn red"
+                    ><i class="material-icons left">block</i>Sair</a
+                  >
+                </li>
+            </ul>
+          </div>
+          <div class="hide-on-large-only	 nav-content">
+            <ul class="tabs tabs-transparent">
+              <li class="tab"><a href="/front/">Pagina Inicial</a></li>
+              <li class="tab"><a href="/front/medicamento/">Medicamento</a></li>
+              <li class="tab"><a href="/front/medico/">Medico</a></li>
+              <li class="tab"><a href="/front/paciente/">Paciente</a></li>
 
-        <!-- CABEÇALHO -->
-        <header>
-            <nav>
-                <div class="nav-wrapper deep-orange lighten-1">
-                    <div class="container">
-                        <ul class="center hide-on-med-and-down">
-                            <li><a href="/front/">Pagina Inicial</a></li>
-                            <li><a href="/front/medicamento/">Medicamento</a></li>
-                            <li><a href="/front/medico/">Medico</a></li>
-                            <li><a href="/front/paciente/">Paciente</a></li>
-                        </ul>
-                        <ul class="right hide-on-med-and-down">
-                            <li><a href="/front/signin/" class="waves-effect waves-light ">Entrar</a></li>
-                            <li v-on:click="deslogar()"><a class="waves-effect waves-light orange">Sair</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <main>
-            <div style="padding:100px 0px 291px 0px">
-                <div>
-                    <div class="container">
-                        <ul class="collection with-header collection-item deep-orange lighten-3">
-                            <li class="collection-header deep-orange lighten-1">
-                                <h4>REALIZAR CADASTRO</h4>
-                            </li>
-                            <li class="collection-item">
-                                <div>Medicamento<a href="/front/medicamento/" class="secondary-content"><i
-                                            class="material-icons">Cadastrar</i></a></div>
-                            </li>
-                            <li class="collection-item deep-orange lighten-1">
-                                <div>Medico<a href="/front/medico/" class="secondary-content"><i
-                                            class="material-icons">Cadastrar</i></a></div>
-                            </li>
-                            <li class="collection-item">
-                                <div>Paciente<a href="/front/paciente/" class="secondary-content"><i
-                                            class="material-icons">Cadastrar</i></a></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            </ul>
+          </div>
+          <div class="hide-on-med-and-up	 nav-content">
+            <ul class="tabs tabs-transparent">
+                <li>
+                    <a
+                      href="/front/signin/"
+                      class="waves-effect waves-light btn green"
+                      ><i class="material-icons left">check</i>Entrar</a
+                    >
+                  </li>
+                  <li v-on:click="deslogar()">
+                    <a class="waves-effect waves-light btn red"
+                      ><i class="material-icons left">block</i>Sair</a
+                    >
+                  </li>
+                </ul>
+        </nav>
+      </header>
+      <main>
+        <div style="padding: 100px 0px 291px 0px">
+          <div>
+            <div class="container">
+              <ul
+                class="collection with-header collection-item deep-orange lighten-3"
+              >
+                <li class="collection-header deep-orange lighten-1">
+                  <h4>REALIZAR CADASTRO</h4>
+                </li>
+                <li class="collection-item">
+                  <div>
+                    Medicamento<a
+                      href="/front/medicamento/"
+                      class="secondary-content"
+                      ><i class="material-icons">Cadastrar</i></a
+                    >
+                  </div>
+                </li>
+                <li class="collection-item deep-orange lighten-1">
+                  <div>
+                    Medico<a href="/front/medico/" class="secondary-content"
+                      ><i class="material-icons">Cadastrar</i></a
+                    >
+                  </div>
+                </li>
+                <li class="collection-item">
+                  <div>
+                    Paciente<a href="/front/paciente/" class="secondary-content"
+                      ><i class="material-icons">Cadastrar</i></a
+                    >
+                  </div>
+                </li>
+              </ul>
             </div>
+          </div>
+        </div>
+      </main>
 
-        </main>
-
-        <footer>
-            <!-- RODAPÉ -->
-            <footer class="page-footer deep-orange lighten-1">
-                <div class="container">
-                    <div class="row">
-                        <div class="col l6 s12">
-                            <h5 class="white-text"> About :3</h5>
-                            <p class="grey-text text-lighten-4"> Terms of Use - Privacy Policy</p>
-                        </div>
-                        <div class="col l4 offset-l2 s12">
-                            <h5 class="white-text">GITHUB</h5>
-                            <ul>
-                                <li><a class="grey-text text-lighten-3" href="https://github.com/ericdourado"
-                                        target="_blank">Eric Dourado</a></li>
-                                <li><a class="grey-text text-lighten-3" href="https://github.com/alefvieira"
-                                        target="_blank">Alef Vieira</a></li>
-                                <li><a class="grey-text text-lighten-3" href="https://github.com/lobistico"
-                                        target="_blank">Eduardo Rodrigues</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-copyright">
-                    <div class="container">
-                        © 2022 Copyright Eric, Eduardo, Alef, Luiz, Renato, Paulo
-                    </div>
-                </div>
-            </footer>
+      <footer>
+        <!-- RODAPÉ -->
+        <footer class="page-footer grey darken-4">
+          <div class="center container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">About :3</h5>
+                <p class="grey-text text-lighten-4">
+                  Terms of Use - Privacy Policy
+                </p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">GITHUB</h5>
+                <ul>
+                  <li>
+                    <a
+                      class="grey-text text-lighten-3"
+                      href="https://github.com/ericdourado"
+                      target="_blank"
+                      >Eric Dourado</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="grey-text text-lighten-3"
+                      href="https://github.com/alefvieira"
+                      target="_blank"
+                      >Alef Vieira</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="grey-text text-lighten-3"
+                      href="https://github.com/lobistico"
+                      target="_blank"
+                      >Eduardo Rodrigues</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            class="center footer-copyright"
+            style="border-top: 1px solid lightslategrey"
+          >
+            <div class="container">
+              © 2022 Copyright Eric, Eduardo, Alef, Luiz, Renato, Paulo
+            </div>
+          </div>
         </footer>
+      </footer>
+
+      
     </div>
     <script>
-        var vapp = new Vue({
-            el: "#app",
-            data() {
-                return {
-                    paciente: {
-
-                    },
-                    pacientes: [],
-                };
-            },
-            mounted() {
-
-            },
-            methods: {
-                deslogar() {
-                    sessionStorage.removeItem("token");
-                },
-                getPacientes() {
-                    let _this = this;
-                    //requisição do tipo GET para recuprar as entidades
-                    //envia token no header para autenticação
-                    $.ajax({
-                        url: "http://localhost:8080/paciente/",
-                        method: "GET",
-                        beforeSend(xhr) {
-                            xhr.setRequestHeader(
-                                "Authorization",
-                                "Bearer " + sessionStorage.getItem("token")
-                            );
-                        },
-                        success(r) {
-                            _this.pacientes = r;
-                        },
-                        error(x) {
-                            console.log(`Erro: ${x}`);
-                        },
-                    });
-                },
-                selecionaPaciente(t) {
-                    //seleciona a tarefa ao clicar na tabela
-                    this.paciente = t;
-                },
-                cancela() {
-                    //limpa a seleção
-                    this.paciente = {
-                        descricao: null,
-                    };
-                },
-                salva() {
-                    let _this = this;
-                    console.log(_this.paciente)
-                    //requisição do tipo POST para inserir ou atualizar uma entidade
-                    //se houver id então atualiza -> isso é verificado no backend
-                    //envia token no header para autenticação
-                    $.ajax({
-                        url: "http://localhost:8080/paciente/",
-                        method: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify(_this.paciente),
-                        beforeSend(xhr) {
-                            xhr.setRequestHeader(
-                                "Authorization",
-                                "Bearer " + sessionStorage.getItem("token")
-                            );
-                        },
-                        success(r) {
-                            _this.getPacientes();
-                            console.log('passei aqui')
-                            _this.cancela();
-                        },
-                        error(x) {
-                            console.log(`Erro: ${x}`);
-                        },
-                    });
-                },
-                exclui() {
-                    let _this = this;
-                    if (_this.paciente.id) {
-                        //requisição do tipo DELETE para excluir uma entidade
-                        //envia token no header para autenticação
-                        $.ajax({
-                            url: "http://localhost:8080/paciente/" + _this.paciente.id,
-                            method: "DELETE",
-                            beforeSend(xhr) {
-                                xhr.setRequestHeader(
-                                    "Authorization",
-                                    "Bearer " + sessionStorage.getItem("token")
-                                );
-                            },
-                            success(r) {
-                                _this.getPacientes();
-                                _this.cancela();
-                            },
-                            error(x) {
-                                console.log(`Erro: ${x}`);
-                            },
-                        });
-                    }
-                },
-
+      var vapp = new Vue({
+        el: '#app',
+        data() {
+          return {
+            paciente: {},
+            pacientes: []
+          }
+        },
+        mounted() {},
+        methods: {
+          deslogar() {
+            sessionStorage.removeItem('token')
+          },
+          getPacientes() {
+            let _this = this
+            //requisição do tipo GET para recuprar as entidades
+            //envia token no header para autenticação
+            $.ajax({
+              url: 'http://localhost:8080/paciente/',
+              method: 'GET',
+              beforeSend(xhr) {
+                xhr.setRequestHeader(
+                  'Authorization',
+                  'Bearer ' + sessionStorage.getItem('token')
+                )
+              },
+              success(r) {
+                _this.pacientes = r
+              },
+              error(x) {
+                console.log(`Erro: ${x}`)
+              }
+            })
+          },
+          selecionaPaciente(t) {
+            //seleciona a tarefa ao clicar na tabela
+            this.paciente = t
+          },
+          cancela() {
+            //limpa a seleção
+            this.paciente = {
+              descricao: null
             }
-        });
+          },
+          salva() {
+            let _this = this
+            console.log(_this.paciente)
+            //requisição do tipo POST para inserir ou atualizar uma entidade
+            //se houver id então atualiza -> isso é verificado no backend
+            //envia token no header para autenticação
+            $.ajax({
+              url: 'http://localhost:8080/paciente/',
+              method: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify(_this.paciente),
+              beforeSend(xhr) {
+                xhr.setRequestHeader(
+                  'Authorization',
+                  'Bearer ' + sessionStorage.getItem('token')
+                )
+              },
+              success(r) {
+                _this.getPacientes()
+                console.log('passei aqui')
+                _this.cancela()
+              },
+              error(x) {
+                console.log(`Erro: ${x}`)
+              }
+            })
+          },
+          exclui() {
+            let _this = this
+            if (_this.paciente.id) {
+              //requisição do tipo DELETE para excluir uma entidade
+              //envia token no header para autenticação
+              $.ajax({
+                url: 'http://localhost:8080/paciente/' + _this.paciente.id,
+                method: 'DELETE',
+                beforeSend(xhr) {
+                  xhr.setRequestHeader(
+                    'Authorization',
+                    'Bearer ' + sessionStorage.getItem('token')
+                  )
+                },
+                success(r) {
+                  _this.getPacientes()
+                  _this.cancela()
+                },
+                error(x) {
+                  console.log(`Erro: ${x}`)
+                }
+              })
+            }
+          }
+        }
+      })
     </script>
-
-</body>
-
+  </body>
 </html>

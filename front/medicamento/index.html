@@ -6,16 +6,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>CADASTRO DE MEDICAMENTO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/scripts.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 
 <body>
+
+    <header>
+        <nav class="nav-extended grey darken-4">
+            <div class="nav-wrapper">
+                <a href="#" class="center brand-logo"><i class="material-icons">add_to_queue</i>ES DEV</a>
+                <ul id="nav-mobile" class=" hide-on-med-and-down">
+                    <div class="left">
+                        <li><a href="/front/">Pagina Inicial</a></li>
+                        <li><a href="/front/medicamento/">Medicamento</a></li>
+                        <li><a href="/front/medico/">Medico</a></li>
+                        <li><a href="/front/paciente/">Paciente</a></li>
+                    </div>
+                </ul>
+                <ul id="nav-mobile" class=" hide-on-small-only">
+                    <div class="right">
+                        <li>
+                            <a href="/front/signin/" class="waves-effect waves-light btn green"><i
+                                    class="material-icons left">check</i>Entrar</a>
+                        </li>
+                        <li v-on:click="deslogar()">
+                            <a class="waves-effect waves-light btn red"><i class="material-icons left">block</i>Sair</a>
+                        </li>
+                </ul>
+            </div>
+            <div class="hide-on-large-only	 nav-content">
+                <ul class="tabs tabs-transparent">
+                    <li class="tab"><a href="/front/">Pagina Inicial</a></li>
+                    <li class="tab"><a href="/front/medicamento/">Medicamento</a></li>
+                    <li class="tab"><a href="/front/medico/">Medico</a></li>
+                    <li class="tab"><a href="/front/paciente/">Paciente</a></li>
+
+                </ul>
+            </div>
+            <div class="hide-on-med-and-up	 nav-content">
+                <ul class="tabs tabs-transparent">
+                    <li>
+                        <a href="/front/signin/" class="waves-effect waves-light btn green"><i
+                                class="material-icons left">check</i>Entrar</a>
+                    </li>
+                    <li v-on:click="deslogar()">
+                        <a class="waves-effect waves-light btn red"><i class="material-icons left">block</i>Sair</a>
+                    </li>
+                </ul>
+        </nav>
+    </header>
+
     <div id="app">
         <div class="container row">
             <h1>Cadastro de Medicamento</h1>
@@ -122,9 +169,9 @@
                                 Cancelar
                             </button>
                             <button class="btn z-depth-1  red darken-4" v-on:click="exclui()">Excluir</button>
-                            
+
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -150,15 +197,53 @@
             <div class="loader">
                 {{loader}}
             </div>
-            
+
         </div>
+        <footer>
+            <!-- RODAPÉ -->
+            <footer class="page-footer grey darken-4">
+                <div class="center container">
+                    <div class="row">
+                        <div class="col l6 s12">
+                            <h5 class="white-text">About :3</h5>
+                            <p class="grey-text text-lighten-4">
+                                Terms of Use - Privacy Policy
+                            </p>
+                        </div>
+                        <div class="col l4 offset-l2 s12">
+                            <h5 class="white-text">GITHUB</h5>
+                            <ul>
+                                <li>
+                                    <a class="grey-text text-lighten-3" href="https://github.com/ericdourado"
+                                        target="_blank">Eric
+                                        Dourado</a>
+                                </li>
+                                <li>
+                                    <a class="grey-text text-lighten-3" href="https://github.com/alefvieira"
+                                        target="_blank">Alef Vieira</a>
+                                </li>
+                                <li>
+                                    <a class="grey-text text-lighten-3" href="https://github.com/lobistico"
+                                        target="_blank">Eduardo
+                                        Rodrigues</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="center footer-copyright" style="border-top: 1px solid lightslategrey">
+                    <div class="container">
+                        © 2022 Copyright Eric, Eduardo, Alef, Luiz, Renato, Paulo
+                    </div>
+                </div>
+            </footer>
+        </footer>
     </div>
 
-
     <script>
-        
+
         var vapp = new Vue({
-            
+
             el: "#app",
             data() {
                 return {
@@ -174,21 +259,21 @@
                 this.getMedicamentos();
             },
             methods: {
-                validarForm(){
+                validarForm() {
                     let _this = this;
 
-                    (_this.medicamento.nome == null || _this.medicamento.nome == "")? _this.erros.push("É necessário preencher o Nome"): ""; 
-                    (_this.medicamento.categoria == null || _this.medicamento.categoria == "" )? _this.erros.push("Informe a categoria") : ""; 
-                    (_this.medicamento.contra_indicacao == null || _this.medicamento.contra_indicacao == "" )? _this.erros.push("Informe a contra indicação") : ""; 
-                    (_this.medicamento.tipo_medicamento == null || _this.medicamento.tipo_medicamento == "" )? _this.erros.push("Informe o tipo de medicamento") : ""; 
-                    ( !_this.dataDeValidade() )? _this.erros.push("Informe uma data válida") : ""; 
+                    (_this.medicamento.nome == null || _this.medicamento.nome == "") ? _this.erros.push("É necessário preencher o Nome") : "";
+                    (_this.medicamento.categoria == null || _this.medicamento.categoria == "") ? _this.erros.push("Informe a categoria") : "";
+                    (_this.medicamento.contra_indicacao == null || _this.medicamento.contra_indicacao == "") ? _this.erros.push("Informe a contra indicação") : "";
+                    (_this.medicamento.tipo_medicamento == null || _this.medicamento.tipo_medicamento == "") ? _this.erros.push("Informe o tipo de medicamento") : "";
+                    (!_this.dataDeValidade()) ? _this.erros.push("Informe uma data válida") : "";
 
-                
+
                 },
 
-                dataDeValidade(){
-                    let _this = this;                    
-                    if((_this.medicamento.data_validade > dataAtual() && (_this.medicamento.data_validade != ""  || _this.medicamento.data_validade != undefined))){
+                dataDeValidade() {
+                    let _this = this;
+                    if ((_this.medicamento.data_validade > dataAtual() && (_this.medicamento.data_validade != "" || _this.medicamento.data_validade != undefined))) {
                         return true;
                     }
                     return false;
@@ -231,7 +316,7 @@
                     _this.erros = [];
                     _this.validarForm();
                     console.log(_this.medicamento)
-                    if(_this.erros.length < 1){
+                    if (_this.erros.length < 1) {
                         //requisição do tipo POST para inserir ou atualizar uma entidade
                         //se houver id então atualiza -> isso é verificado no backend
                         //envia token no header para autenticação
@@ -282,12 +367,9 @@
                 },
 
             }
-            
+
         });
-
-        
     </script>
-
 </body>
 
 </html>

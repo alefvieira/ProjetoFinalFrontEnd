@@ -6,20 +6,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>CADASTRO DE MÉDICO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
     <link rel="stylesheet" href="../css/style.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/scripts.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 
 <body>
+    <header>
+        <nav class="nav-extended grey darken-4">
+            <div class="nav-wrapper">
+                <a href="#" class="center brand-logo"><i class="material-icons">add_to_queue</i>ES DEV</a>
+                <ul id="nav-mobile" class=" hide-on-med-and-down">
+                    <div class="left">
+                        <li><a href="/front/">Pagina Inicial</a></li>
+                        <li><a href="/front/medicamento/">Medicamento</a></li>
+                        <li><a href="/front/medico/">Medico</a></li>
+                        <li><a href="/front/paciente/">Paciente</a></li>
+                    </div>
+                </ul>
+                <ul id="nav-mobile" class=" hide-on-small-only">
+                    <div class="right">
+                        <li>
+                            <a href="/front/signin/" class="waves-effect waves-light btn green"><i
+                                    class="material-icons left">check</i>Entrar</a>
+                        </li>
+                        <li v-on:click="deslogar()">
+                            <a class="waves-effect waves-light btn red"><i class="material-icons left">block</i>Sair</a>
+                        </li>
+                </ul>
+            </div>
+            <div class="hide-on-large-only	 nav-content">
+                <ul class="tabs tabs-transparent">
+                    <li class="tab"><a href="/front/">Pagina Inicial</a></li>
+                    <li class="tab"><a href="/front/medicamento/">Medicamento</a></li>
+                    <li class="tab"><a href="/front/medico/">Medico</a></li>
+                    <li class="tab"><a href="/front/paciente/">Paciente</a></li>
+
+                </ul>
+            </div>
+            <div class="hide-on-med-and-up	 nav-content">
+                <ul class="tabs tabs-transparent">
+                    <li>
+                        <a href="/front/signin/" class="waves-effect waves-light btn green"><i
+                                class="material-icons left">check</i>Entrar</a>
+                    </li>
+                    <li v-on:click="deslogar()">
+                        <a class="waves-effect waves-light btn red"><i class="material-icons left">block</i>Sair</a>
+                    </li>
+                </ul>
+        </nav>
+    </header>
+
     <div id="app">
         <div class="container row">
             <h1>Cadastro de Médico</h1>
-            
+
             <div class="error">
                 <ul>
                     <li v-for="er in erros">{{er}}</li>
@@ -29,7 +76,8 @@
             <div class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input placeholder="Digite aqui" id="nome" type="text" class="validate" v-model.trim="medico.nome">
+                        <input placeholder="Digite aqui" id="nome" type="text" class="validate"
+                            v-model.trim="medico.nome">
                         <label for="nome">Nome <span style="color:red">*</span></label>
                     </div>
                     <div class="input-field col s6">
@@ -94,7 +142,52 @@
         <div class="loader">
             {{loader}}
         </div>
+
+
+
+        <footer>
+            <!-- RODAPÉ -->
+            <footer class="page-footer grey darken-4">
+                <div class="center container">
+                    <div class="row">
+                        <div class="col l6 s12">
+                            <h5 class="white-text">About :3</h5>
+                            <p class="grey-text text-lighten-4">
+                                Terms of Use - Privacy Policy
+                            </p>
+                        </div>
+                        <div class="col l4 offset-l2 s12">
+                            <h5 class="white-text">GITHUB</h5>
+                            <ul>
+                                <li>
+                                    <a class="grey-text text-lighten-3" href="https://github.com/ericdourado"
+                                        target="_blank">Eric
+                                        Dourado</a>
+                                </li>
+                                <li>
+                                    <a class="grey-text text-lighten-3" href="https://github.com/alefvieira"
+                                        target="_blank">Alef Vieira</a>
+                                </li>
+                                <li>
+                                    <a class="grey-text text-lighten-3" href="https://github.com/lobistico"
+                                        target="_blank">Eduardo
+                                        Rodrigues</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="center footer-copyright" style="border-top: 1px solid lightslategrey">
+                    <div class="container">
+                        © 2022 Copyright Eric, Eduardo, Alef, Luiz, Renato, Paulo
+                    </div>
+                </div>
+            </footer>
+        </footer>
+
     </div>
+
+
     <script>
         var vapp = new Vue({
             el: "#app",
@@ -111,32 +204,32 @@
                 this.getMedicos();
             },
             methods: {
-                validarForm(){
+                validarForm() {
                     let _this = this;
                     _this.erros = [];
 
-                    (_this.medico.registro_crm == null || _this.medico.registro_crm == "" )?  _this.erros.push("Informe registro CRM") : ""; 
-                    (_this.medico.unidade_trabalho == null || _this.medico.unidade_trabalho == "" )? _this.erros.push("Informe a unidade de trabalho") : ""; 
-                    (_this.medico.especializacao == null || _this.medico.especializacao == "" )? _this.erros.push("Informe a especialização") : "";  
-                    (_this.medico.cpf == null || _this.medico.cpf == "" )?  _this.erros.push("Informe O CPF") : ""; 
-                    ( !_this.validaData())? _this.erros.push("Informe uma data válida") : ""; 
-                    (_this.medico.nome == null || _this.medico.nome == "")? _this.erros.push("Informe o Nome"): "";                 
+                    (_this.medico.registro_crm == null || _this.medico.registro_crm == "") ? _this.erros.push("Informe registro CRM") : "";
+                    (_this.medico.unidade_trabalho == null || _this.medico.unidade_trabalho == "") ? _this.erros.push("Informe a unidade de trabalho") : "";
+                    (_this.medico.especializacao == null || _this.medico.especializacao == "") ? _this.erros.push("Informe a especialização") : "";
+                    (_this.medico.cpf == null || _this.medico.cpf == "") ? _this.erros.push("Informe O CPF") : "";
+                    (!_this.validaData()) ? _this.erros.push("Informe uma data válida") : "";
+                    (_this.medico.nome == null || _this.medico.nome == "") ? _this.erros.push("Informe o Nome") : "";
                 },
-                validaData(){
-                    let _this = this;                    
-                    if((_this.medico.data_nascimento <= dataAtual() && (_this.medico.data_nascimento != ""  || _this.medico.data_nascimento != undefined))){
+                validaData() {
+                    let _this = this;
+                    if ((_this.medico.data_nascimento <= dataAtual() && (_this.medico.data_nascimento != "" || _this.medico.data_nascimento != undefined))) {
                         return true;
                     }
                     return false;
                 },
                 pegarIdade(e) {
-                    if((e != null )){
+                    if ((e != null)) {
                         var d = e.split("-")
                         const dataAtual = new Date();
                         const anoAtual = dataAtual.getFullYear();
                         return anoAtual - d[0]
                     }
-                    return "--"    
+                    return "--"
                 },
                 getMedicos() {
                     let _this = this;
@@ -177,7 +270,7 @@
 
                     console.log(_this.medico)
 
-                    if(this.erros.length < 1){
+                    if (this.erros.length < 1) {
                         //requisição do tipo POST para inserir ou atualizar uma entidade
                         //se houver id então atualiza -> isso é verificado no backend
                         //envia token no header para autenticação
@@ -201,7 +294,7 @@
                             },
                         });
                     }
-                    
+
                 },
                 exclui() {
                     let _this = this;
@@ -232,7 +325,6 @@
         });
 
     </script>
-
 </body>
 
 </html>
