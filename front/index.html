@@ -18,17 +18,19 @@
         </div>
 
         <main>
-            <div >
+            <div>
                 <div>
-                    <div class="container">
+                    <div class="container e">
                         <div>
                             <ul class="collection with-header collection-item deep-orange lighten-3">
                                 <li class="collection-header deep-orange lighten-1">
                                     <h4>REALIZAR CADASTRO</h4>
                                 </li>
                                 <li class="collection-item">
-                                    <div>Medicamento<a href="/front/medicamento/" class="secondary-content">
-                                        <i class="material-icons">Cadastrar</i></a></div>
+                                    <div>Medicamento
+                                        <a href="/front/medicamento/" class="secondary-content">
+                                            <i class="material-icons">Cadastrar</i></a>
+                                    </div>
                                 </li>
                                 <li class="collection-item deep-orange lighten-1">
                                     <div>Medico<a href="/front/medico/" class="secondary-content"><i
@@ -112,9 +114,9 @@
                 salva() {
                     let _this = this;
                     console.log(_this.paciente)
-                    //requisição do tipo POST para inserir ou atualizar uma entidade
-                    //se houver id então atualiza -> isso é verificado no backend
-                    //envia token no header para autenticação
+                        //requisição do tipo POST para inserir ou atualizar uma entidade
+                        //se houver id então atualiza -> isso é verificado no backend
+                        //envia token no header para autenticação
                     $.ajax({
                         url: "http://localhost:8080/paciente/",
                         method: "POST",
