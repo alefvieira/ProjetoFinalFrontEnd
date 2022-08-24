@@ -4,46 +4,45 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>CADASTRO DE PACIENTE</title>
+    <title>Tela de Cadastro</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<body>
+<body class="teal lighten-5">
     <div id="app">
         <div class="header">
             {{header()}}
         </div>
 
         <main>
-            <div>
-                <div>
-                    <div class="container e">
-                        <div>
-                            <ul class="collection with-header collection-item deep-orange lighten-3">
-                                <li class="collection-header deep-orange lighten-1">
-                                    <h4>REALIZAR CADASTRO</h4>
-                                </li>
-                                <li class="collection-item">
-                                    <div>Medicamento
-                                        <a href="/front/medicamento/" class="secondary-content">
-                                            <i class="material-icons">Cadastrar</i></a>
-                                    </div>
-                                </li>
-                                <li class="collection-item deep-orange lighten-1">
-                                    <div>Medico<a href="/front/medico/" class="secondary-content"><i
-                                                class="material-icons">Cadastrar</i></a></div>
-                                </li>
-                                <li class="collection-item">
-                                    <div>Paciente<a href="/front/paciente/" class="secondary-content"><i
-                                                class="material-icons">Cadastrar</i></a></div>
-                                </li>
-                            </ul>
+            <div class="container">
+
+                <ul class="collection with-header z-depth-4 s2">
+                    <li class="collection-header">
+                        <h4 class="center-align">Inclusão</h4>
+                    </li>
+                    <li class="collection-item z-depth-2 #fafafa grey lighten-4">
+                        <div>Medicamento
+                            <a href="/front/medicamento/" class="secondary-content">
+                                <i class="material-icons small"> add_circle</i></a>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li class="collection-item z-depth-2 #fafafa grey lighten-4">
+                        <div>Medico<a href="/front/medico/" class="secondary-content"><i class="material-icons small">
+                                    add_circle</i></a></div>
+                    </li>
+                    <li class="collection-item z-depth-2 #fafafa grey lighten-4">
+                        <div>Paciente<a href="/front/paciente/" class="secondary-content "><i
+                                    class="material-icons small pulse">
+                                    add_circle</i></a> </div>
+                    </li>
+
+                </ul>
+                
             </div>
         </main>
 
@@ -114,9 +113,9 @@
                 salva() {
                     let _this = this;
                     console.log(_this.paciente)
-                        //requisição do tipo POST para inserir ou atualizar uma entidade
-                        //se houver id então atualiza -> isso é verificado no backend
-                        //envia token no header para autenticação
+                    //requisição do tipo POST para inserir ou atualizar uma entidade
+                    //se houver id então atualiza -> isso é verificado no backend
+                    //envia token no header para autenticação
                     $.ajax({
                         url: "http://localhost:8080/paciente/",
                         method: "POST",
